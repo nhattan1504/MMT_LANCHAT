@@ -22,7 +22,7 @@ import org.w3c.dom.NodeList;
  * @author ktant
  */
 public class Add { 
-    public String filePath="/home/ktant/Documents/MMT/Ass1/lan-chat-app-using-java-master/Assignment_01/Data.xml";
+    public String filePath="/home/ktant/Desktop/lan-chat-app-using-java-master/Assignment_01/Data.xml";
     
 
     public void addUser(String userName, String passWord){

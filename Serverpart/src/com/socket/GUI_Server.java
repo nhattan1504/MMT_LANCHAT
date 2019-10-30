@@ -12,7 +12,7 @@ public class GUI_Server extends javax.swing.JFrame {
 
     public SocketServer server;
     public Thread serverThread;
-    public String filePath = "D:/Data.xml";
+    public String filePath ;
     public JFileChooser fileChooser;
     
     public GUI_Server() {

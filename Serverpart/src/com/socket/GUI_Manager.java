@@ -6,9 +6,13 @@
 package com.socket;
 
 import java.util.ArrayList;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+
 
 public class GUI_Manager extends javax.swing.JFrame {
 
+    DefaultTableModel dm;
     /**
      * Creates new form GUI_Manager
      */
@@ -94,11 +98,15 @@ public class GUI_Manager extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+        dm = (DefaultTableModel) jTable1.getModel();
         int row=jTable1.getSelectedRow();
         String username=jTable1.getModel().getValueAt(row, 0).toString();
         String password= jTable1.getModel().getValueAt(row,1).toString();
-        Manager add= new Manager();
-        add.Delete(username, password);
+        Manager del= new Manager();
+        del.Delete(username, password);
+        dm.removeRow(row);
+        
+        
         
         
         

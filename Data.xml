@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?><data>
-<user><username>nhattan</username><password>123</password></user>
-<user><username>xuanhuy</username><password>123</password></user>
-<user><username>thanhthang</username><password>123</password></user>
-<user><username>longdb</username><password>123</password></user><user><username>tandb</username><password>123</password></user><user><username>tandb1</username><password>123</password></user><user><username>t</username><password>123</password></user><user><username>londb</username><password>123</password></user></data>
+<user>
+<username>nhattan</username>
+<friend>xuanhuy,thanhthang</friend>
+<password>123</password>
+</user>
+<user><username>xuanhuy</username><friend/><password>123</password></user>
+<user><username>thanhthang</username><friend/><password>123</password></user>
+<user><username>tandb</username><password>123</password><friend>nhattan,thanhthang</friend></user></data>

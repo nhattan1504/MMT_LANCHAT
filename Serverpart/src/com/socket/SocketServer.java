@@ -163,6 +163,7 @@ public class SocketServer implements Runnable {
                         clients[findClient(ID)].send(new Message("login", "SERVER", "TRUE", msg.sender));
                         Announce("newuser", "SERVER", msg.sender);
                         SendUserList(msg.sender);
+                       // SendFriendOn(msg.sender);
                     }
                     else{
                         clients[findClient(ID)].send(new Message("login", "SERVER", "FALSE", msg.sender));
@@ -171,6 +172,9 @@ public class SocketServer implements Runnable {
                 else{
                     clients[findClient(ID)].send(new Message("login", "SERVER", "FALSE", msg.sender));
                 }
+            }
+            else if(msg.type.equals("friend")){
+                SendFriendOn(msg.sender);
             }
             else if(msg.type.equals("message")){
                 if(msg.recipient.equals("All")){
@@ -201,6 +205,23 @@ public class SocketServer implements Runnable {
                 else{
                     clients[findClient(ID)].send(new Message("signup", "SERVER", "FALSE", msg.sender));
                 }
+            }
+            else if(msg.type.equals("add_fr")){
+                //if(findUserThread(msg.sender)!=null){
+                    if(db.userExists(msg.sender)==true){
+                        db.addFriend(msg.sender,msg.content);
+                        //clients[findClient(ID)].username = msg.sender;
+                        clients[findClient(ID)].send(new Message("add_fr", "SERVER", "TRUE", msg.sender));
+                        
+                        //Announce("add_fr", "SERVER", msg.sender);
+                    }
+                    else{
+                       clients[findClient(ID)].send(new Message("add_fr", "SERVER", "FALSE", msg.sender));
+                    }
+              //  }
+                //else{
+                    //clients[findClient(ID)].send(new Message("add_fr", "SERVER", "FALSE", msg.sender));
+                //}
             }
             else if(msg.type.equals("upload_req")){
                 if(msg.recipient.equals("All")){
@@ -234,7 +255,13 @@ public class SocketServer implements Runnable {
             findUserThread(toWhom).send(new Message("newuser", "SERVER", clients[i].username, toWhom));
         }
     }
-    
+    public void SendFriendOn(String toWhom){
+        //for(int i=0;i< clientCount;i++){
+            for(int j=0;j<db.listFriend(toWhom).length;j++){
+                findUserThread(toWhom).send(new Message("friend", "SERVER", db.listFriend(toWhom)[j], toWhom));
+            }
+        //}
+    }
     public ServerThread findUserThread(String usr){
         for(int i = 0; i < clientCount; i++){
             if(clients[i].username.equals(usr)){

@@ -87,9 +87,10 @@ public class Database {
             
             Element newuser = doc.createElement("user");
             Element newusername = doc.createElement("username"); newusername.setTextContent(username);
+            Element newfriend= doc.createElement("friend");
             Element newpassword = doc.createElement("password"); newpassword.setTextContent(password);
             
-            newuser.appendChild(newusername); newuser.appendChild(newpassword); data.appendChild(newuser);
+            newuser.appendChild(newusername);newuser.appendChild(newfriend); newuser.appendChild(newpassword);; data.appendChild(newuser);
             
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
@@ -108,4 +109,74 @@ public class Database {
         Node nValue = (Node) nlList.item(0);
 	return nValue.getNodeValue();
   }
+    public void addFriend(String username, String friend) {
+        try {
+
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder b = factory.newDocumentBuilder();
+            Document doc = b.parse(filePath);
+            Element registers = doc.getDocumentElement();
+            NodeList lstRegister = registers.getElementsByTagName("user");
+            for (int i = 0; i < lstRegister.getLength(); i++) {
+                Node info = lstRegister.item(i);
+                Element getInfo = (Element) info;
+                String nameInData = getInfo.getElementsByTagName("username").item(0).getTextContent();
+                if (nameInData.equals(username)) {
+                    String txt = getInfo.getElementsByTagName("friend").item(0).getTextContent();
+                    if (!txt.equals("")) {
+                        getInfo.getElementsByTagName("friend").item(0).setTextContent(txt + "," + friend);
+                    } else {
+                        getInfo.getElementsByTagName("friend").item(0).setTextContent(friend);
+                    }
+                    break;
+                }
+            }
+
+            TransformerFactory transformerFactory = TransformerFactory.newInstance();
+            Transformer transformer = transformerFactory.newTransformer();
+            DOMSource source = new DOMSource(doc);
+            StreamResult result = new StreamResult(filePath);
+            transformer.transform(source, result);
+        } catch (Exception ex) {
+            System.out.println("Exceptionmodify xml");
+        }
+        
+    }
+    public String[] listFriend(String username){
+        String[]list = null;
+        try {
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder b = factory.newDocumentBuilder();
+            Document doc = b.parse(filePath);
+            Element registers = doc.getDocumentElement();
+            NodeList lstRegister = registers.getElementsByTagName("user");
+            for (int i = 0; i < lstRegister.getLength(); i++) {
+                Node info = lstRegister.item(i);
+                Element getInfo = (Element) info;
+                String nameInData = getInfo.getElementsByTagName("username").item(0).getTextContent();
+                if (nameInData.equals(username)) {
+                    String txt = getInfo.getElementsByTagName("friend").item(0).getTextContent();
+                    list=txt.split(",");
+                    System.out.println(txt);
+                    break;
+                }
+            }
+            
+            TransformerFactory transformerFactory = TransformerFactory.newInstance();
+            Transformer transformer = transformerFactory.newTransformer();
+            DOMSource source = new DOMSource(doc);
+            StreamResult result = new StreamResult(new File(filePath));
+            transformer.transform(source, result);
+//            for(int i=0;i<list.length;i++){
+//            System.out.println(list[i]);
+//            }
+            return list;
+            
+	   } 
+           catch(Exception ex){
+		System.out.println("Exceptionmodify xml");
+                return null;
+	   }
+        
+	}
 }

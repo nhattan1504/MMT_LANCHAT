@@ -28,7 +28,7 @@ public class GUI_User extends javax.swing.JFrame {
     
     public GUI_User() {
         initComponents();
-        this.setTitle("jMessenger");
+        this.setTitle("Lan_Messenger");
         model.addElement("All");
         jList1.setSelectedIndex(0);
         
@@ -85,15 +85,13 @@ public class GUI_User extends javax.swing.JFrame {
         jButton4 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
-        jPanel4 = new javax.swing.JPanel();
-        jLabel10 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList();
-        jPanel5 = new javax.swing.JPanel();
-        jLabel11 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
         jButton8 = new javax.swing.JButton();
+        jButton7 = new javax.swing.JButton();
+        jLabel9 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTextArea3 = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(61, 119, 130));
@@ -314,34 +312,12 @@ public class GUI_User extends javax.swing.JFrame {
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("User Online");
-        jPanel3.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(76, 5, -1, -1));
-
-        jPanel4.setBackground(new java.awt.Color(207, 204, 31));
-        jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        jPanel4.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 30, -1));
-
-        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setText("Help");
-        jPanel4.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 0, -1, 30));
-
-        jPanel3.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 530, 210, 30));
+        jPanel3.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, -1, -1));
 
         jList1.setModel((model = new DefaultListModel()));
         jScrollPane2.setViewportView(jList1);
 
-        jPanel3.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 210, 400));
-
-        jPanel5.setBackground(new java.awt.Color(207, 204, 31));
-        jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        jPanel5.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 30, 30));
-
-        jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel12.setText("About us");
-        jPanel5.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 0, -1, 30));
-
-        jPanel3.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 490, 210, 30));
+        jPanel3.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 140, 450));
 
         jButton8.setBackground(new java.awt.Color(255, 255, 102));
         jButton8.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
@@ -353,9 +329,29 @@ public class GUI_User extends javax.swing.JFrame {
                 jButton8ActionPerformed(evt);
             }
         });
-        jPanel3.add(jButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 440, 210, 30));
+        jPanel3.add(jButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 490, 280, 30));
 
-        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 0, 230, 570));
+        jButton7.setText("Add friend");
+        jButton7.setActionCommand("add_fr");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
+        jPanel3.add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 530, 280, -1));
+
+        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel9.setText("Friend");
+        jPanel3.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 10, 100, 20));
+
+        jTextArea3.setColumns(20);
+        jTextArea3.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
+        jTextArea3.setRows(5);
+        jScrollPane3.setViewportView(jTextArea3);
+
+        jPanel3.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 30, 120, 450));
+
+        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 0, 300, 570));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -384,6 +380,7 @@ public class GUI_User extends javax.swing.JFrame {
         
         if(!username.isEmpty() && !password.isEmpty()){
             client.send(new Message("login", username, password, "SERVER"));
+            client.send(new Message("friend",username,"TRUE","SERVER"));
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 //Nut gui tin nhan
@@ -447,6 +444,14 @@ public class GUI_User extends javax.swing.JFrame {
         pms.show();
     }//GEN-LAST:event_jButton8ActionPerformed
 
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        // TODO add your handling code here:
+        //username = jTextField3.getText();
+        String friend = jList1.getSelectedValue().toString();      
+        client.send(new Message("add_fr", username, friend,"SERVER"));
+        client.send(new Message("friend",username,"TRUE","SERVER"));
+    }//GEN-LAST:event_jButton7ActionPerformed
+
    
     public static void main(String args[]) {
         try {
@@ -469,11 +474,9 @@ public class GUI_User extends javax.swing.JFrame {
     public javax.swing.JButton jButton4;
     public javax.swing.JButton jButton5;
     public javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
     public javax.swing.JButton jButton8;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
@@ -490,12 +493,12 @@ public class GUI_User extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
     public javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     public javax.swing.JTextArea jTextArea1;
+    public javax.swing.JTextArea jTextArea3;
     public javax.swing.JTextField jTextField1;
     public javax.swing.JTextField jTextField2;
     public javax.swing.JTextField jTextField3;

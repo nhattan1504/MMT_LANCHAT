@@ -5,7 +5,7 @@ import java.net.*;
 import java.util.Date;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
+//import javax.swing.table.DefaultTableModel;
 
 public class SocketClient implements Runnable{
     
@@ -117,6 +117,12 @@ public class SocketClient implements Runnable{
                         ui.jTextArea1.append("[SERVER > Me] : Login Failed\n");
                     }
                 }
+                else if(msg.type.equals("friend")){
+                    
+                        ui.jTextArea3.append(msg.content+"\n");
+                        //ui.jTextArea3.append("a");
+                        //ui.model1.addElement(msg.content);
+                }
                 else if(msg.type.equals("test")){
                     ui.jButton1.setEnabled(false);
                     ui.jButton2.setEnabled(true); ui.jButton3.setEnabled(true);
@@ -132,7 +138,11 @@ public class SocketClient implements Runnable{
                                 exists = true; break;
                             }
                         }
-                        if(!exists){ ui.model.addElement(msg.content); }
+                        if(!exists){ ui.model.addElement(msg.content);
+                        //ui.jTextArea3.append("a");
+                        //ui.model1.addElement(msg.content);
+                        }
+                        
                     }
                 }
                 else if(msg.type.equals("signup")){
@@ -140,9 +150,20 @@ public class SocketClient implements Runnable{
                         ui.jButton2.setEnabled(false); ui.jButton3.setEnabled(false);
                         ui.jButton4.setEnabled(true); ui.jButton5.setEnabled(true);
                         ui.jTextArea1.append("[SERVER > Me] : Singup Successful\n");
+                        
                     }
                     else{
                         ui.jTextArea1.append("[SERVER > Me] : Signup Failed\n");
+                    }
+                }
+                else if (msg.type.equals("add_fr")){
+                    if(msg.content.equals("TRUE")){
+                        ui.jTextArea1.append("[SERVER > ME]: add friend success\n");
+                        ui.jTextArea3.selectAll();
+                        ui.jTextArea3.replaceSelection("");
+                    }
+                    else{
+                        ui.jTextArea1.append("[SERVER>ME]:failed addfriend\n");
                     }
                 }
                 else if(msg.type.equals("signout")){

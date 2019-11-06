@@ -110,6 +110,7 @@ public class SocketClient implements Runnable{
                     if(msg.content.equals("TRUE")){
                         ui.jButton2.setEnabled(false); ui.jButton3.setEnabled(false);                        
                         ui.jButton4.setEnabled(true); ui.jButton5.setEnabled(true);
+                        
                         ui.jTextArea1.append("[SERVER > Me] : Login Successful\n");
                         ui.jTextField3.setEnabled(false); ui.jPasswordField1.setEnabled(false);
                     }
@@ -118,10 +119,14 @@ public class SocketClient implements Runnable{
                     }
                 }
                 else if(msg.type.equals("friend")){
-                    
+                  
                         ui.jTextArea3.append(msg.content+"\n");
                         //ui.jTextArea3.append("a");
                         //ui.model1.addElement(msg.content);
+                }
+                else if(msg.type.equals("off")){
+                        ui.jTextArea4.append(msg.content+"\n");
+                        
                 }
                 else if(msg.type.equals("test")){
                     ui.jButton1.setEnabled(false);
@@ -139,9 +144,13 @@ public class SocketClient implements Runnable{
                             }
                         }
                         if(!exists){ ui.model.addElement(msg.content);
-                        //ui.jTextArea3.append("a");
-                        //ui.model1.addElement(msg.content);
+                       
+                        ui.jTextArea3.selectAll();
+                        ui.jTextArea3.replaceSelection("");
+                        ui.jTextArea4.selectAll();
+                        ui.jTextArea4.replaceSelection("");
                         }
+                        
                         
                     }
                 }
@@ -161,6 +170,8 @@ public class SocketClient implements Runnable{
                         ui.jTextArea1.append("[SERVER > ME]: add friend success\n");
                         ui.jTextArea3.selectAll();
                         ui.jTextArea3.replaceSelection("");
+                        ui.jTextArea4.selectAll();
+                        ui.jTextArea4.replaceSelection("");
                     }
                     else{
                         ui.jTextArea1.append("[SERVER>ME]:failed addfriend\n");

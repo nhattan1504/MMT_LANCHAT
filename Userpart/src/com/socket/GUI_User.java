@@ -20,17 +20,16 @@ public class GUI_User extends javax.swing.JFrame {
     public Thread clientThread;
     public DefaultListModel model;
     public File file;
-    //public String historyFile = "D:/History.xml";
-    //public HistoryFrame historyFrame;
     
-    //hist là 1 instance của lớp History
+    
+   
     
     
     public GUI_User() {
         initComponents();
         this.setTitle("Lan_Messenger");
         model.addElement("All");
-        jList1.setSelectedIndex(0);
+        //jList1.setSelectedIndex(0);
         
         //jTextField6.setEditable(false);
         
@@ -92,6 +91,9 @@ public class GUI_User extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTextArea3 = new javax.swing.JTextArea();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        jTextArea4 = new javax.swing.JTextArea();
+        jLabel10 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(61, 119, 130));
@@ -341,15 +343,26 @@ public class GUI_User extends javax.swing.JFrame {
         jPanel3.add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 530, 280, -1));
 
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setText("Friend");
-        jPanel3.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 10, 100, 20));
+        jLabel9.setText("Friend Offline");
+        jPanel3.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 250, 100, 20));
 
         jTextArea3.setColumns(20);
         jTextArea3.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
         jTextArea3.setRows(5);
         jScrollPane3.setViewportView(jTextArea3);
 
-        jPanel3.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 30, 120, 450));
+        jPanel3.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 30, 120, 200));
+
+        jTextArea4.setColumns(20);
+        jTextArea4.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
+        jTextArea4.setRows(5);
+        jScrollPane4.setViewportView(jTextArea4);
+
+        jPanel3.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 280, 120, 200));
+
+        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel10.setText("Friend Online");
+        jPanel3.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 10, 100, 20));
 
         getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 0, 300, 570));
 
@@ -380,7 +393,10 @@ public class GUI_User extends javax.swing.JFrame {
         
         if(!username.isEmpty() && !password.isEmpty()){
             client.send(new Message("login", username, password, "SERVER"));
+           // client.send(new Message("clear",username,"TRUE","SERVER"));
             client.send(new Message("friend",username,"TRUE","SERVER"));
+            client.send(new Message("off",username,"TRUE","SERVER"));
+            //client.send(new Message("friend_off",username,"TRUE","SERVER"));
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 //Nut gui tin nhan
@@ -450,6 +466,7 @@ public class GUI_User extends javax.swing.JFrame {
         String friend = jList1.getSelectedValue().toString();      
         client.send(new Message("add_fr", username, friend,"SERVER"));
         client.send(new Message("friend",username,"TRUE","SERVER"));
+        client.send(new Message("off",username,"TRUE","SERVER"));
     }//GEN-LAST:event_jButton7ActionPerformed
 
    
@@ -477,6 +494,7 @@ public class GUI_User extends javax.swing.JFrame {
     private javax.swing.JButton jButton7;
     public javax.swing.JButton jButton8;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
@@ -497,8 +515,10 @@ public class GUI_User extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     public javax.swing.JTextArea jTextArea1;
     public javax.swing.JTextArea jTextArea3;
+    public javax.swing.JTextArea jTextArea4;
     public javax.swing.JTextField jTextField1;
     public javax.swing.JTextField jTextField2;
     public javax.swing.JTextField jTextField3;

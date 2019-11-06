@@ -12,6 +12,7 @@ class ServerThread extends Thread {
     public ObjectInputStream streamIn  =  null;
     public ObjectOutputStream streamOut = null;
     public GUI_Server ui;
+    
 
     public ServerThread(SocketServer _server, Socket _socket){  
     	super();
@@ -173,8 +174,24 @@ public class SocketServer implements Runnable {
                     clients[findClient(ID)].send(new Message("login", "SERVER", "FALSE", msg.sender));
                 }
             }
+//            else if(msg.type.equals("clear")){
+//                for(int i=0; i<clientCount;i++)
+//                {
+//                    clients[findClient(ID)].send(new Message("clear", "SERVER", "TRUE", clients[i].username));
+//                }
+//            }
             else if(msg.type.equals("friend")){
-                SendFriendOn(msg.sender);
+                for(int i=0; i<clientCount;i++)
+                {
+                    SendFriendOn(clients[i].username);
+                }
+                
+            }
+            else if(msg.type.equals("off")){
+                for(int i=0; i<clientCount;i++)
+                {
+                    SendFriendOff(clients[i].username);
+                }
             }
             else if(msg.type.equals("message")){
                 if(msg.recipient.equals("All")){
@@ -212,7 +229,6 @@ public class SocketServer implements Runnable {
                         db.addFriend(msg.sender,msg.content);
                         //clients[findClient(ID)].username = msg.sender;
                         clients[findClient(ID)].send(new Message("add_fr", "SERVER", "TRUE", msg.sender));
-                        
                         //Announce("add_fr", "SERVER", msg.sender);
                     }
                     else{
@@ -256,11 +272,31 @@ public class SocketServer implements Runnable {
         }
     }
     public void SendFriendOn(String toWhom){
-        //for(int i=0;i< clientCount;i++){
+        for(int i=0;i< clientCount;i++){
             for(int j=0;j<db.listFriend(toWhom).length;j++){
-                findUserThread(toWhom).send(new Message("friend", "SERVER", db.listFriend(toWhom)[j], toWhom));
+                if(clients[i].username.equals(db.listFriend(toWhom)[j]))
+                {
+                findUserThread(toWhom).send(new Message("friend", "SERVER", clients[i].username, toWhom));
+                }
+                
             }
-        //}
+        }
+    }
+    public void SendFriendOff(String toWhom){
+        for(int j=0;j<db.listFriend(toWhom).length;j++){
+            boolean exist=false;
+            for(int i=0;i< clientCount;i++){
+                if(clients[i].username.equals(db.listFriend(toWhom)[j]))
+                {
+                    exist=true;
+                    break;
+                }
+            }
+            if(!exist)
+            {
+                findUserThread(toWhom).send(new Message("off", "SERVER", db.listFriend(toWhom)[j], toWhom));
+            }
+        }
     }
     public ServerThread findUserThread(String usr){
         for(int i = 0; i < clientCount; i++){
